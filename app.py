@@ -5,27 +5,9 @@ from contextlib import redirect_stdout
 from dotenv import load_dotenv
 
 from langchain_google_genai import ChatGoogleGenerativeAI
-# LangChain import compatibility (0.3 moved agents to langchain-classic)
-try:
-    from langchain.agents import AgentExecutor, create_tool_calling_agent
-except Exception:  # ImportError or others
-    from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
-
-# Hub import - LangChain 0.3+ moved hub to langchain.hub module
-try:
-    from langchain import hub
-except ImportError:
-    try:
-        # Alternative: try langchain.hub submodule
-        import langchain.hub as hub
-    except (ImportError, AttributeError):
-        try:
-            # Fallback: use langchain_community
-            from langchain_community import hub
-        except ImportError:
-            import warnings
-            warnings.warn("Could not import hub. Please install: pip install langchain-community")
-            hub = None
+# LangChain imports (using stable 0.2.x version)
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain import hub
 
 # Import all the tools from your github_tools.py file
 from github_tools import (
