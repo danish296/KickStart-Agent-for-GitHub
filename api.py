@@ -12,7 +12,11 @@ from pydantic import BaseModel
 from github import Github
 
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.agents import AgentExecutor, create_tool_calling_agent
+# LangChain import compatibility (0.3 moved agents to langchain-classic)
+try:
+    from langchain.agents import AgentExecutor, create_tool_calling_agent
+except Exception:
+    from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain import hub
 
 from functools import update_wrapper
