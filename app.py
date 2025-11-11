@@ -15,7 +15,10 @@ except Exception:  # ImportError or others
 try:
     from langchain import hub
 except Exception:
-    from langchainhub import hub
+    from langchainhub import pull as hub_pull
+    # Create a hub-like object for compatibility
+    class hub:
+        pull = staticmethod(hub_pull)
 
 # Import all the tools from your github_tools.py file
 from github_tools import (
