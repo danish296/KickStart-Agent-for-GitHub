@@ -15,10 +15,19 @@ except Exception:  # ImportError or others
 try:
     from langchain import hub
 except ImportError:
-    # Absolute last fallback for rare older setups
-    import warnings
-    warnings.warn("LangChain hub import failed. Please update langchain >= 0.1.20.")
-    hub = None
+    try:
+        # In LangChain 0.3+, hub might be in langchain_core
+        from langchain_core import hub
+    except ImportError:
+        # Last resort: use langchainhub if available
+        try:
+            from langchainhub import pull as hub_pull
+            class hub:
+                pull = staticmethod(hub_pull)
+        except ImportError:
+            import warnings
+            warnings.warn("LangChain hub import failed. Please install: pip install langchain langchainhub")
+            hub = None
 
 # Import all the tools from your github_tools.py file
 from github_tools import (
