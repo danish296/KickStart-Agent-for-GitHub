@@ -58,7 +58,37 @@ def load_agent():
     return agent_executor, None
 
 # --- Main Application UI ---
-st.title("Code Sidekick Agent 🤖")
+col1, col2 = st.columns([6, 1])
+with col1:
+    st.title("Code Sidekick Agent 🤖")
+with col2:
+    with st.popover("ℹ️ Info", use_container_width=True):
+        st.markdown("### 📖 How to Use")
+        st.markdown("""
+        **1. Get a GitHub Personal Access Token (PAT):**
+        - Go to [GitHub Settings → Developer Settings → Personal Access Tokens → Tokens (classic)](https://github.com/settings/tokens)
+        - Click **"Generate new token (classic)"**
+        - Give it a name (e.g., "Code Sidekick Agent")
+        - Select scope: **`repo`** (Full control of private repositories)
+        - Click **"Generate token"**
+        - **Copy the token** (you won't see it again!)
+        
+        **2. Connect to GitHub:**
+        - Paste your PAT in the sidebar
+        - Click **"Connect"**
+        - Select a repository from the dropdown
+        
+        **3. Choose a Task:**
+        - Select a task type (Feature, Debug, File operations)
+        - Fill in the details
+        - Click **"Run Agent"**
+        
+        ---
+        
+        **👨‍💻 Developed by:** [danish296](https://github.com/danish296)
+        
+        **⭐ Star on GitHub:** [KickStart-Agent-for-GitHub](https://github.com/danish296/KickStart-Agent-for-GitHub)
+        """)
 
 # Load the agent
 agent_executor, error = load_agent()
