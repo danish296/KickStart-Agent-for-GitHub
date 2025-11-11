@@ -11,14 +11,14 @@ try:
 except Exception:  # ImportError or others
     from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 
-# Hub import compatibility (requires langchainhub package in newer setups)
+# Hub import (modern LangChain)
 try:
     from langchain import hub
-except Exception:
-    from langchainhub import pull as hub_pull
-    # Create a hub-like object for compatibility
-    class hub:
-        pull = staticmethod(hub_pull)
+except ImportError:
+    # Absolute last fallback for rare older setups
+    import warnings
+    warnings.warn("LangChain hub import failed. Please update langchain >= 0.1.20.")
+    hub = None
 
 # Import all the tools from your github_tools.py file
 from github_tools import (
@@ -58,7 +58,11 @@ def load_agent():
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-lite", google_api_key=os.getenv("GEMINI_API_KEY"))
     
     # Create the agent
-    prompt = hub.pull("hwchase17/openai-tools-agent")
+    if hub:
+        prompt = hub.pull("hwchase17/openai-tools-agent")
+    else:
+        return None, "LangChain Hub unavailable. Please upgrade langchain >= 0.1.20."
+    
     agent = create_tool_calling_agent(llm, tools, prompt)
     agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
     

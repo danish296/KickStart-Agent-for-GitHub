@@ -1,7 +1,6 @@
-langchain
+langchain==0.2.11
 langchain-classic
-langchain-google-genai
-langchainhub
+langchain-google-genai==0.0.10
 PyGithub
-python-dotenv
-streamlit
+python-dotenv==1.0.1
+streamlit==1.39.0
