@@ -1,7 +1,7 @@
 # LangChain core and compatible components
-langchain==0.2.11
+langchain>=0.3.0
 langchain-classic==1.0.0
-langchain-google-genai==1.0.3
+langchain-google-genai>=1.0.0
 
 # Utilities
 PyGithub==2.4.0
