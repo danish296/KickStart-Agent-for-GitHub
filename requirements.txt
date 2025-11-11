@@ -1,6 +1,6 @@
 # LangChain core and compatible components
 langchain==0.2.11
-langchain-classic==0.1.3
+langchain-classic==1.0.0
 langchain-google-genai==1.0.3
 
 # Utilities
