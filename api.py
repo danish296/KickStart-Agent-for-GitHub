@@ -17,7 +17,12 @@ try:
     from langchain.agents import AgentExecutor, create_tool_calling_agent
 except Exception:
     from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
-from langchain import hub
+
+# Hub import compatibility
+try:
+    from langchain import hub
+except Exception:
+    from langchainhub import hub
 
 from functools import update_wrapper
 

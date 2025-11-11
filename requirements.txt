@@ -1,6 +1,7 @@
 langchain
 langchain-classic
 langchain-google-genai
+langchainhub
 PyGithub
 python-dotenv
 streamlit
