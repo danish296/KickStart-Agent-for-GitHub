@@ -11,18 +11,21 @@ try:
 except Exception:  # ImportError or others
     from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 
-# Hub import - use langchainhub directly (official for LangChain 0.3+)
+# Hub import - LangChain 0.3+ moved hub to langchain.hub module
 try:
-    import langchainhub
-    # Create hub object with pull method for compatibility
-    class hub:
-        @staticmethod
-        def pull(name):
-            return langchainhub.pull(name)
+    from langchain import hub
 except ImportError:
-    import warnings
-    warnings.warn("langchainhub not installed. Install with: pip install langchainhub")
-    hub = None
+    try:
+        # Alternative: try langchain.hub submodule
+        import langchain.hub as hub
+    except (ImportError, AttributeError):
+        try:
+            # Fallback: use langchain_community
+            from langchain_community import hub
+        except ImportError:
+            import warnings
+            warnings.warn("Could not import hub. Please install: pip install langchain-community")
+            hub = None
 
 # Import all the tools from your github_tools.py file
 from github_tools import (
